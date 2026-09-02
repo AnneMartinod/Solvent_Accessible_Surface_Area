@@ -1,9 +1,17 @@
 import math
 import matplotlib.pyplot as plt
 
-rayons = {'N' : 1.5, 'O': 1.4, 'S' : 1.85, 'CG' : 1.85, 'CD1' : 1.85, 'CD2' : 1.85,
-           'CE1' : 1.85, 'CE2' : 1.85, 'CE3' : 1.85,
-            'CZ' : 1.85, 'CH2' : 1.85, 'CA' : 1.5 , "CB" : 1.5, 'C' : 2.0}
+# rayons = {'N' : 1.5, 'NE2' : 1.5, 'ND1' : 1.5, 'ND2' : 1.5, 'NE' : 1.5, 'NH1':1.5, 
+#           'NH2' : 1.5, 'NZ' : 1.5, 'O': 1.4, 'OXT' : 1.4, 'OE1' : 1.4, 'OE2' : 1.4,
+#           'OD1' : 1.4, 'OG' : 1.4, 'OG1' : 1.4, 'OH' : 1.4, 'SG' : 1.85, 'CA' : 2,
+#           'C' : 1.5, 'CB' : 1.5, 'CD1' : 1.85, 'CD2' : 1.85, 'CE1' : 1.85, 'CE2' : 1.85, 
+#           'CZ' : 1.85, 'CG' : 2, 'CG1': 2, 'CG2' : 2, 'CD' : 2, 'CD1' : 2, 'CD2' : 2,
+#           'CE' : 2, 'CG' : 2}
+
+rayons = {'N' : 1.5, 'O': 1.4, 'SG' : 1.85, 'CA' : 2,
+          'C' : 1.5, 'CB' : 1.5, 'CD1' : 1.85, 'CD2' : 1.85, 'CE1' : 1.85, 'CE2' : 1.85, 
+          'CZ' : 1.85, 'CG' : 2, 'CG1': 2, 'CG2' : 2, 'CD' : 2, 'CD1' : 2, 'CD2' : 2,
+          'CE' : 2, 'CG' : 2}
 
 rayon_H2O = 1.4
 
@@ -23,14 +31,15 @@ def parsepdb(file_name) :
                 y = float(line[38:46].strip())
                 z = float(line[46:54].strip())
 
-                atoms.append({
-                    "id": atom_id,
-                    "name": atom_name,
-                    "res_name": res_name,
-                    "chain": chain_id,
-                    "res_id": res_seq,
-                    "coords": (x, y, z),
-                })
+                if atom_name[0] != 'H':
+                    atoms.append({
+                        "id": atom_id,
+                        "name": atom_name,
+                        "res_name": res_name,
+                        "chain": chain_id,
+                        "res_id": res_seq,
+                        "coords": (x, y, z),
+                    })
     return atoms
 
 def saff_kuijlaars_sphere(n_points, radius, center=(0.0, 0.0, 0.0)):
@@ -63,17 +72,19 @@ def saff_kuijlaars_sphere(n_points, radius, center=(0.0, 0.0, 0.0)):
 
 
 def get_vdw_radius(atom_name, rayons_dict):
-    """
-    Récupère le rayon VdW selon le nom de l'atome ou le premier caractère (élément).
-    """
+    """Récupère le rayon VdW selon le nom de l'atome."""
     if atom_name in rayons_dict:
         return rayons_dict[atom_name]
-    # Fallback sur l'élément (ex: 'C', 'N', 'O', 'S')
-    elem = atom_name[0]
-    return rayons_dict.get(elem, 1.70) # a verifier si mon dictionnaire est complet au début
+    else:
+        return rayons_dict[atom_name[0]]
+    # if atom_name in rayons_dict:
+    #     return rayons_dict[atom_name]
+    # # Fallback sur l'élément (ex: 'C', 'N', 'O', 'S')
+    # elem = atom_name[0]
+    # return rayons_dict.get(elem, 1.70) # a verifier si mon dictionnaire est complet au début
 
 
-def generate_protein_spheres(atoms, n_points=400, probe_radius=1.4):
+def generate_protein_spheres(atoms, n_points, probe_radius):
     """
     Associe à chaque atome son nuage de points sur sa sphère étendue.
     """
@@ -101,7 +112,9 @@ if __name__ == "__main__":
     print(f"  - Nombre de points générés : {len(atoms[0]['sphere_points'])}")
     print(f"  - Coordonnées du 1er point : {atoms[0]['sphere_points'][0]}")
 
-    print(atoms[0])
+    #print(atoms[0])
+    print(len(atoms))
+
 
 
     # def afficher_sphere(atom):
