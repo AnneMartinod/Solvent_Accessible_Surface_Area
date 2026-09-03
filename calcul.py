@@ -1,7 +1,7 @@
 import math
 import test_v2 as fonctions
 
-rayons = {'N' : 1.5, 'O': 1.4, 'SG' : 1.85, 'CA' : 2,
+rayons = {'N' : 1.5, 'O': 1.4, 'S' : 1.85, 'CA' : 2,
           'C' : 1.5, 'CB' : 1.5, 'CD1' : 1.85, 'CD2' : 1.85, 'CE1' : 1.85, 'CE2' : 1.85, 
           'CZ' : 1.85, 'CG' : 2, 'CG1': 2, 'CG2' : 2, 'CD' : 2, 'CD1' : 2, 'CD2' : 2,
           'CE' : 2, 'CG' : 2}
@@ -19,7 +19,7 @@ def near_neighboor(atom1, atom2):
     return False
 
 if __name__ == "__main__" : 
-    atoms = fonctions.parsepdb("3I40.pdb")
+    atoms = fonctions.parsepdb("1CRN.pdb")
     atoms = fonctions.generate_protein_spheres(atoms, n_points=nb_points, probe_radius=rayon_H2O)
 
     for i in range(len(atoms)): 
@@ -35,9 +35,24 @@ if __name__ == "__main__" :
                         break
             if point_obstrus == False : 
                 atoms[i]['nb_points_accessibles'] += 1
+        atoms[i]['% points accessibles'] = (atoms[i]['nb_points_accessibles']/nb_points)*100
 
+    points_accessibles = 0
+    surface_totale_accessible = 0
     for atom in atoms : 
-        print(f"{atom['res_name']} {atom['name']} : {atom['nb_points_accessibles']}")
+        surface = 4 * math.pi * atom['radius_extended']**2
+        surface_1pt = surface / nb_points
+        points_accessibles += atom['nb_points_accessibles']
+        surface_accessible = atom['nb_points_accessibles'] * surface_1pt
+        surface_totale_accessible += surface_accessible
+        print(f"{atom['res_name']} {atom['name']} : {atom['nb_points_accessibles']} |"
+              f" % de l'atome accessible : {atom['% points accessibles']:.3f} |"
+              f" surface atome accessible : {surface_accessible}")
+
+
+    perc_pt_access = points_accessibles/(nb_points*len(atoms))
+    print(f"Pourcentage de points accessibles : {perc_pt_access*100:.2f}")
+    print(f"Surface totale accessible de la protéine : {surface_totale_accessible}")
 
                 
 
