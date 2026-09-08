@@ -1,7 +1,25 @@
+"""Extraction des données d'un fichier PDB et génération des points sur les sphères
+atomiques."""
+
 import math
-import matplotlib.pyplot as plt
 
 def parsepdb(file_name) : 
+    """ Extraction des informations des atomes d'un fichier PDB en ignorant atome d'hydrogene.
+
+    Arguments : 
+        file_name (str): nom du fichier PDB.
+    
+    Returns : 
+    liste de dictionnaires représentant chaque atome.
+        Clé : 
+            "id" (int) : numéro de l'atome.
+            "name" (str): nom de l'atome.
+            "res_name" (str): nom du résidu.
+            "chain" (str): chaine protéique.
+            "res_id" (int): numéro du résidu.
+            "coords" (tuple[float, float, float]): Coordonnées atomiques (x, y, z).
+    """
+
     atoms = []
     with open(file_name, "r") as f : 
         for line in f :
@@ -12,7 +30,6 @@ def parsepdb(file_name) :
                 chain_id = line[21].strip()
                 res_seq = int(line[22:26].strip())
 
-                # Coordonnées (x, y, z) en Angströms
                 x = float(line[30:38].strip())
                 y = float(line[38:46].strip())
                 z = float(line[46:54].strip())
@@ -24,15 +41,24 @@ def parsepdb(file_name) :
                         "res_name": res_name,
                         "chain": chain_id,
                         "res_id": res_seq,
-                        "coords": (x, y, z),
+                        "coords": (x, y, z)
                     })
     return atoms
 
-def saff_kuijlaars_sphere(n_points, radius, center=(0.0, 0.0, 0.0)):
+def saff_kuijlaars_sphere(radius, n_points, center):
     """
-    Génère n_points répartis uniformément sur une sphère de rayon 'radius'
-    centrée sur 'center' (cx, cy, cz) selon l'algorithme de Saff & Kuijlaars (1997).
+    Génère n_points répartis uniformément sur une sphère selon l'algorithme 
+    de Saff & Kuijlaars (1997).
+
+    Arguments : 
+        n_points (int) : nombre de points à placer sur la sphère.
+        radius (float) : rayon de la sphère.
+        center (tuple) : centre de la sphère.
+
+    Returns : 
+        list(tuple): chaque tuple contient les coordonnées x, y, z d'un point de la sphère.
     """
+    
     points = []
     cx, cy, cz = center
     phi = 0.0
@@ -58,21 +84,38 @@ def saff_kuijlaars_sphere(n_points, radius, center=(0.0, 0.0, 0.0)):
 
 
 def get_vdw_radius(atom_name, rayons_dict):
-    """Récupère le rayon VdW selon le nom de l'atome."""
+    """Récupère le rayon VdW associé à un atome.
+    
+    Arguments : 
+        atom_name (str) : nom de l'atome.
+        rayons_dict (dict) : dictionnaire avec pour clé les noms d'atome et valeur
+            leurs rayons.
+    
+    Returns : 
+        float : Rayon de van der Waals de l'atome recherché.
+    """
     if atom_name in rayons_dict:
         return rayons_dict[atom_name]
     else:
         return rayons_dict[atom_name[0]]
-    # if atom_name in rayons_dict:
-    #     return rayons_dict[atom_name]
-    # # Fallback sur l'élément (ex: 'C', 'N', 'O', 'S')
-    # elem = atom_name[0]
-    # return rayons_dict.get(elem, 1.70) # a verifier si mon dictionnaire est complet au début
+    
 
 
-def generate_protein_spheres(atoms, n_points, probe_radius, rayons_dict):
+def generate_protein_spheres(atoms, probe_radius, rayons_dict, n_points):
     """
     Associe à chaque atome son nuage de points sur sa sphère étendue.
+
+    Arguments : 
+        atoms (list[dict]) : liste de dictionnaires représentant chaque atome.
+        n_points (int) : nombre de points à placer sur la sphère.
+        probe_radius (float) : rayon de la sonde.
+        rayons_dict (dict) : dictionnaire avec pour clé les noms d'atomes et pour valeurs
+            leurs rayons.
+
+    Returns : 
+        liste[dict] : liste modifiées en place avec clés ajoutées :  
+            "radius_extended" (float) : rayon étendu de l'atome.
+            "sphere_points" (list[tuple]): Coordonnées des points de la sphère. 
     """
     for atom in atoms:
         r_vdw = get_vdw_radius(atom["name"], rayons_dict)
@@ -81,8 +124,8 @@ def generate_protein_spheres(atoms, n_points, probe_radius, rayons_dict):
         # Stockage du rayon étendu et de la liste de coordonnées des points
         atom["radius_extended"] = r_etendu
         atom["sphere_points"] = saff_kuijlaars_sphere(
-            n_points=n_points,
             radius=r_etendu,
+            n_points=n_points,
             center=atom["coords"]
         )
     return atoms
