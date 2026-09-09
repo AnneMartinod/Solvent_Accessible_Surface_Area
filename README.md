@@ -42,7 +42,7 @@ Pour chaque atome de la protéine :
 - **`distance(atom1, atom2)`** : distance euclidienne entre deux points 3D.
 - **`near_neighbor(atoms)`** : identifie, pour chaque atome, les atomes voisins dont les sphères étendues se chevauchent (optimisation du calcul).
 - **`accessibilite_point(atoms, nbpoints)`** : détermine, pour chaque atome, le nombre et le pourcentage de points de sa sphère qui sont accessibles au solvant.
-- **`surface_accessible(atoms, nbpoints)`** : calcule la SASA totale de la protéine, ainsi que le pourcentage global et le nombre total de points accessibles.
+- **`surface_accessible(atoms, nbpoints)`** : calcule la SASA totale de la protéine, ainsi que le pourcentage de surface et le nombre total de points accessibles.
 
 ### `prog_princ.py`
 Script principal qui :
@@ -95,7 +95,7 @@ Temps d'exécution total : 18.40 secondes
 Dans `prog_princ.py` :
 - **`rayons`** : dictionnaire des rayons de van der Waals par type d'atome (Å).
 - **`rayon_probe`** : rayon de la sonde (molécule de solvant), 1.4 Å par défaut.
-- **`nb_points`** : nombre de points générés par sphère atomique (92 par défaut). Plus ce nombre est élevé, plus la précision augmente, au prix d'un temps de calcul plus long.
+- **`nb_points`** : nombre de points générés par sphère atomique (92 par défaut). Plus ce nombre est élevé, plus la précision augmente, au prix d'un temps de calcul plus long. Vous pouvez décommentez la ligne 18 pour modifier le nombre de points.
 
 ## Limites 
 
