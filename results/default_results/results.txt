@@ -1,39 +1,45 @@
 Avec 92 points par sphère : 
 
 Pour 168L : 
+Nombre total d'atomes : 6445 
 Nombre total de points accessibles : 29702 
-Pourcentage de points accessibles : 5.01 %
+Pourcentage de surface accessible : 5.09 %
 Surface totale accessible de la protéine : 38751.07 Å²
-Temps d'exécution : 13.85 secondes
+Temps d'exécution : 13.33 secondes
 
 Pour 1CRN : 
+Nombre total d'atomes : 327 
 Nombre total de points accessibles : 2266 
-Pourcentage de points accessibles : 7.53 %
+Pourcentage de surface accessible : 7.84 %
 Surface totale accessible de la protéine : 3014.73 Å²
 Temps d'exécution : 0.16 secondes
 
 Pour 1GFO : 
+Nombre total d'atomes : 2623 
 Nombre total de points accessibles : 12666 
-Pourcentage de points accessibles : 5.25 %
+Pourcentage de surface accessible : 5.35 %
 Surface totale accessible de la protéine : 16568.12 Å²
-Temps d'exécution : 2.82 secondes
+Temps d'exécution : 2.73 secondes
 
 Pour 1MH1 : 
+Nombre total d'atomes : 1395 
 Nombre total de points accessibles : 6969 
-Pourcentage de points accessibles : 5.43 %
+Pourcentage de surface accessible : 5.54 %
 Surface totale accessible de la protéine : 9151.80 Å²
-Temps d'exécution : 1.03 secondes
+Temps d'exécution : 1.04 secondes
 
 Pour 1BTA : 
+Nombre total d'atomes : 720 
 Nombre total de points accessibles : 4142 
-Pourcentage de points accessibles : 6.25 %
+Pourcentage de surface accessible : 6.21 %
 Surface totale accessible de la protéine : 5284.94 Å²
-Temps d'exécution : 0.41 secondes
+Temps d'exécution : 0.40 secondes
 
 Pour 3I40 : 
+Nombre total d'atomes : 411 
 Nombre total de points accessibles : 2603 
-Pourcentage de points accessibles : 6.88 %
+Pourcentage de surface accessible : 6.97 %
 Surface totale accessible de la protéine : 3401.20 Å²
-Temps d'exécution : 0.20 secondes
+Temps d'exécution : 0.19 secondes
 
-Temps d'exécution total : 18.48 secondes
+Temps d'exécution total : 17.86 secondes
