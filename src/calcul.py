@@ -78,19 +78,23 @@ def surface_accessible(atoms, nbpoints):
 
     Returns : 
         tuple[float, float, int] : tuple contenant : 
-            pourcentage de points accessibles (float).
+            pourcentage de surface accessibles (float).
             surface totale accessible (float).
             nombre total de points accessibles (int). 
     """
     points_accessibles = 0
     surface_totale_accessible = 0
+    surface_maximum = 0
     for atom in atoms : 
         surface = 4 * math.pi * atom['radius_extended']**2
+        surface_maximum += surface
         surface_1pt = surface / nbpoints
         points_accessibles += atom['nb_points_accessibles']
         surface_accessible = atom['nb_points_accessibles'] * surface_1pt
         surface_totale_accessible += surface_accessible
 
-    perc_pt_access = points_accessibles/(nbpoints*len(atoms)) * 100
-    return perc_pt_access, surface_totale_accessible, points_accessibles
+    perc_surface_access = (surface_totale_accessible/surface_maximum)*100
+
+    return perc_surface_access, surface_totale_accessible, points_accessibles
+
 

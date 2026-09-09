@@ -28,7 +28,7 @@ if __name__ == "__main__" :
     dossier_resultats.mkdir(exist_ok=True, parents=True)
     
 
-    with open(dossier_resultats / "resultats.txt", "w") as f:
+    with open(dossier_resultats / "results.txt", "w") as f:
         f.write(f"Avec {nb_points} points par sphère : \n\n")
 
         for mol in liste_molecule:
@@ -43,8 +43,9 @@ if __name__ == "__main__" :
             surface = formule.surface_accessible(atoms, nb_points)
    
             f.write(f"Pour {mol.stem} : \n")
+            f.write(f"Nombre total d'atomes : {len(atoms)} \n")
             f.write(f"Nombre total de points accessibles : {surface[2]} \n")
-            f.write(f"Pourcentage de points accessibles : {surface[0]:.2f} %\n")
+            f.write(f"Pourcentage de surface accessible : {surface[0]:.2f} %\n")
             f.write(f"Surface totale accessible de la protéine : {surface[1]:.2f} Å²\n")
 
             fin_iter = time.time()
