@@ -71,23 +71,25 @@ python src/prog_princ.py
 ### Exemple de fichier de sortie
 
 ```
-Avec 100 points par sphère : 
+Avec 92 points par sphère : 
 
 Pour 168L : 
-Nombre total de points accessibles : 32314 
-Pourcentage de points accessibles : 5.01 %
-Surface totale accessible de la protéine : 38796.15 Å²
-Temps d'exécution : 13.62 secondes
+Nombre total d'atomes : 6445 
+Nombre total de points accessibles : 29702 
+Pourcentage de surface accessible : 5.09 %
+Surface totale accessible de la protéine : 38751.07 Å²
+Temps d'exécution : 13.33 secondes
 
 Pour 1CRN : 
-Nombre total de points accessibles : 2436 
-Pourcentage de points accessibles : 7.45 %
-Surface totale accessible de la protéine : 2989.26 Å²
-Temps d'exécution : 0.17 secondes
+Nombre total d'atomes : 327 
+Nombre total de points accessibles : 2266 
+Pourcentage de surface accessible : 7.84 %
+Surface totale accessible de la protéine : 3014.73 Å²
+Temps d'exécution : 0.16 secondes
 
 [...]
 
-Temps d'exécution total : 18.40 secondes
+Temps d'exécution total : 17.86 secondes
 ```
 
 ## Paramètres modifiables
